@@ -4,9 +4,11 @@ let answerChoices = document.getElementById("choices");
 let startBtn = document.getElementById("start");
 let startScreen = document.getElementById("start-screen");
 let feedback = document.getElementById("feedback");
+let endScreen = document.getElementById("end-screen");
 
 
 let correctAnswers = 0;
+let wrongAsnwers = 0;
 let questionIndex = 0;
 
 let allQuestions = {
@@ -42,7 +44,7 @@ function displayQuestion() {
     let questionData = allQuestions[questionKey];
     
     if (!questionData) {
-        alert("There is no more questions");
+        endScreen.classList.remove("hide");
         return;
     }
 
@@ -64,13 +66,14 @@ function displayQuestion() {
 
 function checkAnswer(isCorrect) {
 
-   
+   setTimeout(function() {
 
     if (isCorrect) {
         questionIndex++;
         correctAnswers++;
         displayFeedback(true);
     } else {
+        wrongAsnwers++;
         displayFeedback(false);
     }
 
@@ -78,6 +81,11 @@ function checkAnswer(isCorrect) {
     answerChoices.textContent = "";
     
     displayQuestion();
+
+
+   },100)
+
+   
 
 }
 
@@ -95,7 +103,5 @@ function displayFeedback(isCorrect) {
     setTimeout(function () {
         feedback.classList.add("hide");
         feedback.textContent = "";
-    },2000);
-
-    
+    },1300);
 }
