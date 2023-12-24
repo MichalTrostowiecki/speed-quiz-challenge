@@ -7,11 +7,17 @@ let feedback = document.getElementById("feedback");
 let endScreen = document.getElementById("end-screen");
 let finalScore = document.getElementById("final-score");
 let time = document.getElementById("time");
+let submitBtn = document.getElementById("submit");
+
+
+
 
 let correctAnswers = 0;
 let wrongAsnwers = 0;
 let questionIndex = 0;
 let timeCount = 60;
+
+localStorage.setItem("players", []);
 
 let allQuestions = {
     question1: {
@@ -92,7 +98,6 @@ startBtn.addEventListener("click", function() {
 
 function displayQuestion() {
     
-
     answerChoices.textContent = "";
     let questionKey = Object.keys(allQuestions)[questionIndex];
     let questionData = allQuestions[questionKey];
@@ -115,8 +120,6 @@ function displayQuestion() {
             })
         }
     }
-
-    
 }
 
 function checkAnswer(isCorrect) {
@@ -152,10 +155,9 @@ function displayFeedback(isCorrect) {
     if (isCorrect) {
         feedback.textContent = "This is right answer";
     } else {
-        feedback.textContent = "This is wrong answer"
+        feedback.textContent = "This is wrong answer."
     }
     
-
     setTimeout(function () {
         feedback.classList.add("hide");
         feedback.textContent = "";
@@ -166,7 +168,7 @@ let timerInterval;
 
 function timer() {
 
-    clearInterval()
+    clearInterval(timerInterval)
 
     timerInterval = setInterval(function() {
         if (timeCount < 0) {
@@ -186,3 +188,39 @@ function endQuiz() {
     questionsDiv.classList.add("hide");
     answerChoices.classList.add("hide");
 }
+
+submitBtn.addEventListener("click", function(event) {
+    event.preventDefault();
+
+    let playersData = localStorage.getItem("players");
+
+    if (playersData) {
+        playersData = JSON.parse(playersData);
+        if(!Array.isArray(playersData)) {
+            playersData = [];
+    
+        }
+
+    } else {
+        playersData = [];
+        localStorage.setItem("players", [])
+    }
+  
+    let player = {
+        initials: "",
+        scores: 0,
+    }
+
+    let initials = document.getElementById("initials").value;
+
+    player.initials = initials;
+    player.scores = correctAnswers;
+    playersData.push(player);
+
+    localStorage.setItem("players", JSON.stringify(playersData));
+
+    
+
+    
+}
+)
