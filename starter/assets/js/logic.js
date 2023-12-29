@@ -17,7 +17,9 @@ let wrongAsnwers = 0;
 let questionIndex = 0;
 let timeCount = 60;
 
-localStorage.setItem("players", []);
+if (localStorage.getItem("players") === null ) {
+    localStorage.setItem("players", JSON.stringify([]));
+}
 
 let allQuestions = {
     question1: {
@@ -104,6 +106,7 @@ function displayQuestion() {
     
     if (!questionData) {
         endQuiz();
+        
         return;
     }
 
@@ -174,6 +177,7 @@ function timer() {
         if (timeCount < 0) {
             clearTimeout(timerInterval);
             endQuiz();
+            
         } else {
             time.textContent = timeCount;
             timeCount--;
@@ -187,6 +191,10 @@ function endQuiz() {
     finalScore.textContent = correctAnswers;
     questionsDiv.classList.add("hide");
     answerChoices.classList.add("hide");
+    timeCount = 0;
+    timeCount.textContent = timeCount;
+    
+    
 }
 
 submitBtn.addEventListener("click", function(event) {
@@ -203,7 +211,6 @@ submitBtn.addEventListener("click", function(event) {
 
     } else {
         playersData = [];
-        localStorage.setItem("players", [])
     }
   
     let player = {
@@ -216,10 +223,8 @@ submitBtn.addEventListener("click", function(event) {
     player.initials = initials;
     player.scores = correctAnswers;
     playersData.push(player);
-
     localStorage.setItem("players", JSON.stringify(playersData));
-
-    
+    document.getElementById("initials").value = "";
 
     
 }
