@@ -6,9 +6,14 @@ const resetBtn = document.getElementById("clear");
 let players = [];
 players = JSON.parse(localStorage.getItem("players"));
 
-
-// Saving player initials and score to local storage.
+// Sort the players array by score in descending order
 if (players !== null) {
+
+    // Sorts players arrays in descending order
+    players.sort(function (a, b) {
+        return b.scores - a.scores
+    });
+    
     for (let i = 0; i < players.length; i++) {
         let playerInitials = players[i].initials;
         let playerScores = players[i].scores;
@@ -26,7 +31,3 @@ if (players !== null) {
         localStorage.removeItem("players");
     });
 }
-
-
-
-
