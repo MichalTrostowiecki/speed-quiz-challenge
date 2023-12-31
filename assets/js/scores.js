@@ -1,9 +1,13 @@
+// Grabbing Dom elements to be manipulated.
 const highScoresContainer = document.getElementById("highscores");
 const resetBtn = document.getElementById("clear");
 
+// Getting data from local storage.
 let players = [];
 players = JSON.parse(localStorage.getItem("players"));
 
+
+// Saving player initials and score to local storage.
 if (players !== null) {
     for (let i = 0; i < players.length; i++) {
         let playerInitials = players[i].initials;
@@ -14,6 +18,7 @@ if (players !== null) {
         highScoresContainer.appendChild(displayPlayer);
     }
     
+    // Clear the scores from DOM and removes players from the local storage.
     resetBtn.addEventListener("click", function() {
         while (highScoresContainer.firstChild) {
             highScoresContainer.removeChild(highScoresContainer.firstChild);
